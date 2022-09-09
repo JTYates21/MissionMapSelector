@@ -33,7 +33,7 @@ struct ContentView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(.black, lineWidth: 2))
-                        .textContentType(.oneTimeCode).onChange(of: userCode) { newValue in
+                        .onChange(of: userCode) { newValue in
                             if newValue.count == 4 {
                                 userCode = userCode + "-"
                             } else if newValue.count > 9 {
@@ -63,7 +63,7 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    NavigationLink("admin", destination: AdminView(firstName: "", lastName: "", openingDate: Date()))
+                    NavigationLink("admin", destination: AdminView())
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 15)

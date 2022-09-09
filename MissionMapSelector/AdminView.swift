@@ -9,33 +9,78 @@ import SwiftUI
 
 struct AdminView: View {
     
-    @State var firstName: String
-    @State var lastName: String
-    @State var openingDate: Date
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    @State var userCode = ""
+    @State var userPin = ""
     
     var body: some View {
         NavigationView {
             VStack {
-                Form {
-                    HStack {
-                        Text("First Name:")
-                        TextField("First Name", text: $firstName)
+                
+                Spacer()
+
+                VStack {
+                    TextField("User Code", text: $userCode)
+                        .padding(15)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(.black, lineWidth: 2))
+                        .padding(.horizontal, 10)
+                        .padding(.top, 10)
+                    
+                    TextField("Pin", text: $userPin)
+                        .padding(15)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(.black, lineWidth: 2))
+                        .padding(10)
+                        .padding(.bottom, 0)
+                    
+                    Button(action: saveNew) {
+                        Text("enter")
+                            .font(.custom("CinzelDecorative-Regular", size: 20))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 30)
+                            .padding(.vertical, 5)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Capsule())
+                            .padding(.horizontal, 15)
                     }
-                    HStack {
-                        Text("Last Name:")
-                        TextField("Last Name", text: $lastName)
-                    }
-                    Section {
-                        HStack {
-                            DatePicker(selection: $openingDate, in: ...Date(), displayedComponents: .date) {
-                                Text("Opening date:")
-                            }
-                        }
+                    .padding(.bottom, 10)
+                    .disabled(userCode.isEmpty || userPin.isEmpty)
+                }
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 75)
+                
+                    NavigationLink("create new user", destination: NewUserView())
+                        .font(.custom("CinzelDecorative-Regular", size: 14))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 5)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        .padding(.horizontal, 50)
+                
+                Spacer()
+                Spacer()
+            }
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: goBack) {
+                        Text("return")
+                            .font(.custom("CinzelDecorative-Regular", size: 14))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 5)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Capsule())
+                            .padding(.horizontal, 15)
                     }
                 }
-                .padding(30)
-                
-            }
+            })
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
             .background {
                 GeometryReader { geometry in
                     Image("WorldMap1")
@@ -47,11 +92,23 @@ struct AdminView: View {
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+    }
+    
+    func goBack() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    func saveNew() {
+        //        let missionary = Missionary(firstName: "Stoctkon", lastName: "Yates", userCode: "Viking", openingDate: "")
+        //        MissionaryController.shared.save(missionary: missionary)
+        MissionaryController.shared.retrieveMissionary(id: "OzhacfuRSbovQutQ506W")
     }
 }
 
 struct AdminView_Previews: PreviewProvider {
     static var previews: some View {
-        AdminView(firstName: "", lastName: "", openingDate: Date())
+        AdminView()
     }
 }

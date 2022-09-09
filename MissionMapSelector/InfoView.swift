@@ -33,7 +33,8 @@ struct InfoView: View {
                 .foregroundColor(.black)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 2)
-                .background(.ultraThinMaterial)
+                
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 30)
             
             Spacer()
