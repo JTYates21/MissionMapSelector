@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4D14A01028B3CB1400E78B1D /* MissionMapSelectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D14A00F28B3CB1400E78B1D /* MissionMapSelectorApp.swift */; };
-		4D14A01228B3CB1400E78B1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D14A01128B3CB1400E78B1D /* ContentView.swift */; };
+		4D14A01228B3CB1400E78B1D /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D14A01128B3CB1400E78B1D /* HomePageView.swift */; };
 		4D14A01428B3CB1600E78B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D14A01328B3CB1600E78B1D /* Assets.xcassets */; };
 		4D14A01728B3CB1600E78B1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D14A01628B3CB1600E78B1D /* Preview Assets.xcassets */; };
+		4D25F7F128D21E4900500CC9 /* MainContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D25F7F028D21E4900500CC9 /* MainContainerView.swift */; };
+		4D25F7F328D223FF00500CC9 /* UserDefaultExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D25F7F228D223FF00500CC9 /* UserDefaultExtensions.swift */; };
 		4D27E9F028CA3A2A00928C88 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */; };
 		4D27E9F228CA47D500928C88 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9F128CA47D500928C88 /* MapView.swift */; };
-		4D27E9F428CA480700928C88 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9F328CA480700928C88 /* MainView.swift */; };
+		4D27E9F428CA480700928C88 /* TabContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9F328CA480700928C88 /* TabContainer.swift */; };
 		4D5E008928C24CD1000E61B3 /* NewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5E008828C24CD1000E61B3 /* NewUserView.swift */; };
 		4D66E47B28C0FE410090B9DD /* MissionaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66E47A28C0FE410090B9DD /* MissionaryController.swift */; };
 		4D66E47D28C0FEA20090B9DD /* Missionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66E47C28C0FEA20090B9DD /* Missionary.swift */; };
@@ -34,12 +36,14 @@
 /* Begin PBXFileReference section */
 		4D14A00C28B3CB1400E78B1D /* MissionMapSelector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MissionMapSelector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D14A00F28B3CB1400E78B1D /* MissionMapSelectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionMapSelectorApp.swift; sourceTree = "<group>"; };
-		4D14A01128B3CB1400E78B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4D14A01128B3CB1400E78B1D /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		4D14A01328B3CB1600E78B1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D14A01628B3CB1600E78B1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4D25F7F028D21E4900500CC9 /* MainContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerView.swift; sourceTree = "<group>"; };
+		4D25F7F228D223FF00500CC9 /* UserDefaultExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultExtensions.swift; sourceTree = "<group>"; };
 		4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4D27E9F128CA47D500928C88 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		4D27E9F328CA480700928C88 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4D27E9F328CA480700928C88 /* TabContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainer.swift; sourceTree = "<group>"; };
 		4D5E008828C24CD1000E61B3 /* NewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserView.swift; sourceTree = "<group>"; };
 		4D66E47A28C0FE410090B9DD /* MissionaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionaryController.swift; sourceTree = "<group>"; };
 		4D66E47C28C0FEA20090B9DD /* Missionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missionary.swift; sourceTree = "<group>"; };
@@ -91,17 +95,19 @@
 				4DB18B1328B9113E0037EEB0 /* Info.plist */,
 				4DB18B1828B9289A0037EEB0 /* GoogleService-Info.plist */,
 				4D14A00F28B3CB1400E78B1D /* MissionMapSelectorApp.swift */,
+				4D25F7F228D223FF00500CC9 /* UserDefaultExtensions.swift */,
 				4D66E47A28C0FE410090B9DD /* MissionaryController.swift */,
 				4D66E47C28C0FEA20090B9DD /* Missionary.swift */,
-				4D14A01128B3CB1400E78B1D /* ContentView.swift */,
+				4D14A01128B3CB1400E78B1D /* HomePageView.swift */,
 				4DB18B1428B912F80037EEB0 /* InfoView.swift */,
 				4DB18B1628B913550037EEB0 /* AdminView.swift */,
 				4DB18B0A28B910E40037EEB0 /* Fonts */,
 				4D14A01328B3CB1600E78B1D /* Assets.xcassets */,
 				4D14A01528B3CB1600E78B1D /* Preview Content */,
 				4D5E008828C24CD1000E61B3 /* NewUserView.swift */,
+				4D25F7F028D21E4900500CC9 /* MainContainerView.swift */,
+				4D27E9F328CA480700928C88 /* TabContainer.swift */,
 				4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */,
-				4D27E9F328CA480700928C88 /* MainView.swift */,
 				4D27E9F128CA47D500928C88 /* MapView.swift */,
 			);
 			path = MissionMapSelector;
@@ -212,10 +218,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D27E9F028CA3A2A00928C88 /* ProfileView.swift in Sources */,
-				4D14A01228B3CB1400E78B1D /* ContentView.swift in Sources */,
+				4D14A01228B3CB1400E78B1D /* HomePageView.swift in Sources */,
 				4D27E9F228CA47D500928C88 /* MapView.swift in Sources */,
-				4D27E9F428CA480700928C88 /* MainView.swift in Sources */,
+				4D25F7F128D21E4900500CC9 /* MainContainerView.swift in Sources */,
+				4D27E9F428CA480700928C88 /* TabContainer.swift in Sources */,
 				4D5E008928C24CD1000E61B3 /* NewUserView.swift in Sources */,
+				4D25F7F328D223FF00500CC9 /* UserDefaultExtensions.swift in Sources */,
 				4DB18B1528B912F80037EEB0 /* InfoView.swift in Sources */,
 				4D66E47B28C0FE410090B9DD /* MissionaryController.swift in Sources */,
 				4D66E47D28C0FEA20090B9DD /* Missionary.swift in Sources */,

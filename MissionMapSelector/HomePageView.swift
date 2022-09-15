@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomePageView: View {
     
     @State private var userCode: String = ""
     
@@ -27,19 +27,17 @@ struct ContentView: View {
                 
                 
                 VStack {
-                    TextField("####-####", text: $userCode)
+                    TextField("room code", text: $userCode)
+                        .onSubmit {
+                            findMissionary()
+                        }
+                        .font(.custom("CinzelDecorative-Regular", size: 14))
                         .multilineTextAlignment(.center)
                         .padding(7)
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(.black, lineWidth: 2))
-                        .onChange(of: userCode) { newValue in
-                            if newValue.count == 4 {
-                                userCode = userCode + "-"
-                            } else if newValue.count > 9 {
-                                userCode = String(userCode.prefix(9))
-                            }
-                        }
+                
                     Text("enter code")
                         .font(.custom("CinzelDecorative-Regular", size: 17))
                 }
@@ -52,6 +50,7 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack {
+                    
                     NavigationLink("info", destination: InfoView())
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .foregroundColor(.black)
@@ -85,6 +84,11 @@ struct ContentView: View {
             }
         }
     }
+    func findMissionary() {
+        let code = userCode.lowercased()
+        MissionaryController.shared.findMissionary(with: code)
+    }
+    
     //    extension UITextContentType {
     //
     //    }
@@ -92,6 +96,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        HomePageView()
     }
 }

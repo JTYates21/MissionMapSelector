@@ -73,12 +73,6 @@ struct NewUserView: View {
                                         adminPin = String(adminPin.prefix(4))
                                     }
                                 }
-//                            Button {
-//                                showAdminPinPanel.toggle()
-//                            } label: {
-//                                Image(systemName: "info.circle")
-//                            }
-//                            .foregroundColor(.gray)
                         }
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .padding(5)
@@ -90,12 +84,6 @@ struct NewUserView: View {
                         HStack{
                             Text("public code:")
                             TextField("8 letter word", text: $publicCode)
-//                            Button {
-//                                showPublicInfoPanel.toggle()
-//                            } label: {
-//                                Image(systemName: "info.circle")
-//                            }
-//                            .foregroundColor(.gray)
                         }
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .padding(5)
@@ -109,7 +97,7 @@ struct NewUserView: View {
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                     
                     NavigationLink("enter", isActive: $showMain) {
-                        MainView()
+                        TabContainer()
                     }
                     .hidden()
                     .frame(width: 0, height: 0)
@@ -155,23 +143,6 @@ struct NewUserView: View {
                             .offset(x: -10, y: -10)
                     }
                 }
-                
-                
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(.gray)
-                    .frame(width: showAdminPinPanel ? 175 : 0,
-                           height: showAdminPinPanel ? 50 : 0)
-                    .animation(.spring(), value: showAdminPinPanel)
-                    .opacity(0.9)
-                    .offset(y: 21)
-                
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(.gray)
-                    .frame(width: showPublicInfoPanel ? 175 : 0,
-                           height: showPublicInfoPanel ? 50 : 0)
-                    .animation(.spring(), value: showPublicInfoPanel)
-                    .opacity(0.9)
-                    .offset(y: 60)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
