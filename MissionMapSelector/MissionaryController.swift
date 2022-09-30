@@ -9,6 +9,12 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+enum MissionaryError: Error {
+    case noMissionaryFound
+    case noDocuments
+    case unknown
+}
+
 class MissionaryController: ObservableObject {
     static let shared = MissionaryController()
     
@@ -22,7 +28,9 @@ class MissionaryController: ObservableObject {
     
     private let path: String = "Missionary"
     private let roomCodeKey = "roomCode"
-    private let adminPinKey = "adminPin"
+    let adminPinKey = "adminPin"
+    
+    private var isAdmin = false
     
     private let store = Firestore.firestore()
     
@@ -34,61 +42,38 @@ class MissionaryController: ObservableObject {
             retrieveMissionary(id: missionaryId)
         }
     }
+
     
-    func findAdminMissionary(with roomCode: String, adminPin: String) {
-        let missionaryRef = db.collection(path)
-        let query = missionaryRef.whereField(roomCodeKey, isEqualTo: roomCode).whereField(adminPinKey, isEqualTo: adminPin)
-        
-        query.getDocuments { snapshot, error in
-            if let snapshot = snapshot {
-                if let firstDoc = snapshot.documents.first {
-                    guard snapshot.documents.count == 1 else {
-                        print("more than one missionary found")
-                        return
-                    }
-                    let missionary = try? firstDoc.data(as: Missionary.self)
-                    self.adminMissionary = missionary
-                } else {
-                    //Show error code
-                    print("no missionary found")
-                }
-                for document in snapshot.documents {
-                    let missionary = try? document.data(as: Missionary.self)
-                    print("\(document.documentID) => \(document.data())")
-                }
-            } else if let err = error {
-                print("Error getting documents: \(err)")
-            } else {
-                print("You are lost")
-            }
+    func findMissionary(with roomCode: String, adminPin: String? = nil, callBack: @escaping (MissionaryError?) -> ()) {
+        var adminPin = adminPin
+        if adminPin == nil {
+            adminPin = UserDefaults.standard.string(forKey: adminPinKey)
         }
-    }
-    
-    func findMissionary(with roomCode: String) {
         let missionaryRef = db.collection(path)
-        let query = missionaryRef.whereField(roomCodeKey, isEqualTo: roomCode)
+        let query = missionaryRef.whereField(roomCodeKey, isEqualTo: roomCode.lowercased())
         
-        query.getDocuments { snapshot, error in
+        query.getDocuments { [weak self] snapshot, error in
+            guard let self = self else {return}
             if let snapshot = snapshot {
                 if let firstDoc = snapshot.documents.first {
-                    guard snapshot.documents.count == 1 else {
-                        print("more than one missionary found")
-                        return
-                    }
+                    
                     let missionary = try? firstDoc.data(as: Missionary.self)
                     self.missionary = missionary
+                    callBack(nil)
+                    if let adminPin = adminPin, adminPin == missionary?.adminPin {
+                        self.isAdmin = true
+                    }
                 } else {
-                    //Show error code
-                    print("no missionary found")
+                    callBack(.noMissionaryFound)
                 }
                 for document in snapshot.documents {
                     let missionary = try? document.data(as: Missionary.self)
                     print("\(document.documentID) => \(document.data())")
                 }
             } else if let err = error {
-                print("Error getting documents: \(err)")
+                callBack(.noDocuments)
             } else {
-                print("You are lost")
+                callBack(.unknown)
             }
         }
     }

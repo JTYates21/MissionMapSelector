@@ -9,15 +9,33 @@ import SwiftUI
 
 struct TabContainer: View {
     var body: some View {
-        TabView {
-            MapView()
-                .tabItem {
-                    Label("Map", systemImage: "map")
+        NavigationView {
+            TabView {
+                MapView()
+                    .tabItem {
+                        Label("Map", systemImage: "map")
+                    }
+                ProfileView()
+                    .tabItem {
+                        Label("Missionary", systemImage: "person.text.rectangle")
+                    }
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: { MissionaryController.shared.missionary = nil}) {
+                        Text("return")
+                            .font(.custom("CinzelDecorative-Regular", size: 14))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 5)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Capsule())
+                            .padding(.horizontal, 15)
+                    }
                 }
-            ProfileView()
-                .tabItem {
-                    Label("Missionary", systemImage: "person.text.rectangle")
-                }
+            })
         }
         .onAppear {
             let appearance = UITabBarAppearance()

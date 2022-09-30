@@ -14,6 +14,9 @@ struct AdminView: View {
     @State var userCode = ""
     @State var userPin = ""
     
+    @State var showTabContainer = false
+    @State private var showingAlert = false
+    
     var body: some View {
         VStack {
             
@@ -36,7 +39,7 @@ struct AdminView: View {
                     .padding(10)
                     .padding(.bottom, 0)
                 
-                Button(action: saveNew) {
+                Button(action: login) {
                     Text("enter")
                         .font(.custom("CinzelDecorative-Regular", size: 20))
                         .foregroundColor(.black)
@@ -63,6 +66,12 @@ struct AdminView: View {
             
             Spacer()
             Spacer()
+        }
+        .fullScreenCover(isPresented: $showTabContainer) {
+            TabContainer()
+        }
+        .alert("No missionary found", isPresented: $showingAlert) {
+            Button("OK") { }
         }
         .toolbar(content: {
             ToolbarItem(placement: .cancellationAction) {
@@ -96,11 +105,17 @@ struct AdminView: View {
         presentationMode.wrappedValue.dismiss()
     }
     
-    func saveNew() {
-        //        let missionary = Missionary(firstName: "Stoctkon", lastName: "Yates", userCode: "Viking", openingDate: "")
-        //        MissionaryController.shared.save(missionary: missionary)
+    func login() {
         let userCode = userCode
-        MissionaryController.shared.retrieveMissionary(id: "OzhacfuRSbovQutQ506W")
+        let userPin = userPin
+        MissionaryController.shared.findMissionary(with: userCode, adminPin: userPin) { error in
+            if let error = error {
+                showingAlert = true
+            } else {
+                showTabContainer = true
+                UserDefaults.standard.setValue(userPin, forKey: MissionaryController.shared.adminPinKey)
+            }
+        }
     }
 }
 

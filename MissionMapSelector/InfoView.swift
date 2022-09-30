@@ -15,7 +15,9 @@ struct InfoView: View {
         this app has been produced for the use of
         individuals seeking to have fun guessing
         which mission a family member or friend
-        might be going.
+        might be going to.
+        
+        this app is not sponsered or affiliated with the church of jesus christ of latter-day saints.
         
         a big thank you to those who helped
         produce and stylize the app, to those
@@ -29,7 +31,7 @@ struct InfoView: View {
         VStack {
             Spacer()
             Text(infoText)
-                .font(.custom("CinzelDecorative-Regular", size: 20))
+                .font(.custom("CinzelDecorative-Regular", size: 18))
                 .foregroundColor(.black)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 2)

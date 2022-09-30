@@ -83,7 +83,7 @@ struct NewUserView: View {
                         
                         HStack{
                             Text("public code:")
-                            TextField("8 letter word", text: $publicCode)
+                            TextField("6-8 letter word", text: $publicCode)
                         }
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .padding(5)
@@ -160,7 +160,7 @@ struct NewUserView: View {
         
         showMain = true
         
-        let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode, adminPin: adminPin)
+        let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode.lowercased(), adminPin: adminPin)
         
         MissionaryController.shared.save(missionary: missionary)
     }

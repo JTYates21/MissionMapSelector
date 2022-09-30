@@ -10,6 +10,9 @@ import SwiftUI
 struct HomePageView: View {
     
     @State private var userCode: String = ""
+    @State private var showTabContainer = false
+    
+    @State private var showingAlert = false
     
     var body: some View {
         NavigationView {
@@ -83,10 +86,22 @@ struct HomePageView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $showTabContainer) {
+            TabContainer()
+        }
+        .alert("No room code found", isPresented: $showingAlert) {
+            Button("OK") { }
+        }
     }
     func findMissionary() {
         let code = userCode.lowercased()
-        MissionaryController.shared.findMissionary(with: code)
+        MissionaryController.shared.findMissionary(with: code) { error in
+            if let error = error {
+                showingAlert = true
+            } else {
+                showTabContainer = true
+            }
+        }
     }
     
     //    extension UITextContentType {
