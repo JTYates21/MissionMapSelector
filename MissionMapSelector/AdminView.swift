@@ -106,7 +106,7 @@ struct AdminView: View {
     }
     
     func login() {
-        let userCode = userCode
+        let userCode = userCode.lowercased()
         let userPin = userPin
         MissionaryController.shared.findMissionary(with: userCode, adminPin: userPin) { error in
             if let error = error {

@@ -16,6 +16,7 @@ struct NewUserView: View {
     @State var openingDate = Date()
     @State var adminPin = ""
     @State var publicCode = ""
+    @State var description = ""
     
     @State var showMain = false
     
@@ -160,7 +161,7 @@ struct NewUserView: View {
         
         showMain = true
         
-        let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode.lowercased(), adminPin: adminPin)
+        let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode.lowercased(), adminPin: adminPin, description: description)
         
         MissionaryController.shared.save(missionary: missionary)
     }

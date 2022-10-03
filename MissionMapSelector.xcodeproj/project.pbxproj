@@ -20,6 +20,7 @@
 		4D27E9F028CA3A2A00928C88 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */; };
 		4D27E9F228CA47D500928C88 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9F128CA47D500928C88 /* MapView.swift */; };
 		4D27E9F428CA480700928C88 /* TabContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27E9F328CA480700928C88 /* TabContainer.swift */; };
+		4D5B945128E7454100CB824B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B945028E7454100CB824B /* MapViewController.swift */; };
 		4D5E008928C24CD1000E61B3 /* NewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5E008828C24CD1000E61B3 /* NewUserView.swift */; };
 		4D66E47B28C0FE410090B9DD /* MissionaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66E47A28C0FE410090B9DD /* MissionaryController.swift */; };
 		4D66E47D28C0FEA20090B9DD /* Missionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D66E47C28C0FEA20090B9DD /* Missionary.swift */; };
@@ -52,6 +53,7 @@
 		4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4D27E9F128CA47D500928C88 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4D27E9F328CA480700928C88 /* TabContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainer.swift; sourceTree = "<group>"; };
+		4D5B945028E7454100CB824B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4D5E008828C24CD1000E61B3 /* NewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserView.swift; sourceTree = "<group>"; };
 		4D66E47A28C0FE410090B9DD /* MissionaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionaryController.swift; sourceTree = "<group>"; };
 		4D66E47C28C0FEA20090B9DD /* Missionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missionary.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				4D5E008828C24CD1000E61B3 /* NewUserView.swift */,
 				4D27E9F328CA480700928C88 /* TabContainer.swift */,
 				4D27E9F128CA47D500928C88 /* MapView.swift */,
+				4D5B945028E7454100CB824B /* MapViewController.swift */,
 				4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */,
 				4D0441A428D38912002F1BB1 /* HeaderBanner.swift */,
 				4D0441A828D389C1002F1BB1 /* ColorSlider.swift */,
@@ -245,6 +248,7 @@
 				4D0441A728D389A6002F1BB1 /* UserSettings.swift in Sources */,
 				4DB18B1728B913550037EEB0 /* AdminView.swift in Sources */,
 				4D14A01028B3CB1400E78B1D /* MissionMapSelectorApp.swift in Sources */,
+				4D5B945128E7454100CB824B /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

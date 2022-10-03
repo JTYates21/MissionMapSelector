@@ -18,14 +18,15 @@ struct ProfileView: View {
                 ProfileText()
             }
             Spacer()
-            Button (
-                action: { self.isPresented = true },
-                label: {
-                    Label("Edit", systemImage: "pencil")
-                })
-            .sheet(isPresented: $isPresented, content: {
-                SettingsView()
-            })
+//            Button (
+//                action: { self.isPresented = true },
+//                label: {
+//                    Label("Edit", systemImage: "pencil")
+//                })
+//            .padding(.bottom, 80)
+//            .sheet(isPresented: $isPresented, content: {
+//                SettingsView()
+//            })
         }
         .background(.ultraThinMaterial)
         .background {

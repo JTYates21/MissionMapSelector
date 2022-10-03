@@ -10,18 +10,20 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("description") var description = DefaultSettings.description
 
     var body: some View {
         NavigationView {
             Form {
                 HeaderBackgroundSliders()
-                ProfileSettings()
+                ProfileSettings(description: $description)
             }
             .navigationBarTitle(Text("Settings"))
             .navigationBarItems(
                 trailing:
                     Button (
                         action: {
+                            save()
                             self.presentationMode.wrappedValue.dismiss()
                         },
                         label: {
@@ -31,10 +33,16 @@ struct SettingsView: View {
             )
         }
     }
+    func save() {
+        guard var missionary = MissionaryController.shared.missionary else {return}
+        
+        missionary.description = description
+        MissionaryController.shared.save(missionary: missionary)
+    }
 }
 struct ProfileSettings: View {
     @AppStorage("name") var name = (MissionaryController.shared.missionary?.firstName ?? "") + " " + (MissionaryController.shared.missionary?.lastName ?? "")
-    @AppStorage("description") var description = DefaultSettings.description
+    @Binding var description: String
     
     var body: some View {
         Section(header: Text("Profile")) {

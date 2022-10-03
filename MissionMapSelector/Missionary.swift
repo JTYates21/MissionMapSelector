@@ -15,6 +15,7 @@ struct Missionary: Codable {
     let openingDateString: String
     let roomCode: String
     let adminPin: String
+    var description: String
 //    var openingDate: Date {
 //        
 //    }

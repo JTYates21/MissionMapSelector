@@ -11,7 +11,7 @@ struct TabContainer: View {
     var body: some View {
         NavigationView {
             TabView {
-                MapView()
+                MapViewRepresentable()
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }

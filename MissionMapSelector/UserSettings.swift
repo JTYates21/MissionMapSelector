@@ -17,6 +17,6 @@ enum DefaultSettings {
     static var bValue: Double = 150.0
     
     // Profile
-    static var name: String = "Johny Appleseed"
-    static var description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non arcu risus quis varius quam. Faucibus ornare suspendisse sed nisi lacus sed viverra tellus. Ornare suspendisse sed nisi lacus sed viverra tellus. Arcu odio ut sem nulla pharetra. Vitae congue mauris rhoncus aenean vel elit. Scelerisque eu ultrices vitae auctor eu."
+    static var name: String = "Elder/Sister Smith"
+    static var description: String = "Welcome to my profile! I hope you enjoy trying to guess where I am going as much as I do!"
 }

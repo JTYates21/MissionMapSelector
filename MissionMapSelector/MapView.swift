@@ -14,8 +14,8 @@ struct Location: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-
 struct MapView: View {
+    
     @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.770410, longitude: -111.891747), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     
     @State var locations = [
