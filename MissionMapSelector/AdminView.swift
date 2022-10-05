@@ -23,7 +23,8 @@ struct AdminView: View {
             Spacer()
             
             VStack {
-                TextField("User Code", text: $userCode)
+                TextField("public code", text: $userCode)
+                    .font(.custom("CinzelDecorative-Regular", size: 14))
                     .padding(15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
@@ -31,7 +32,8 @@ struct AdminView: View {
                     .padding(.horizontal, 10)
                     .padding(.top, 10)
                 
-                TextField("Pin", text: $userPin)
+                TextField("pin", text: $userPin)
+                    .font(.custom("CinzelDecorative-Regular", size: 14))
                     .padding(15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
@@ -109,7 +111,7 @@ struct AdminView: View {
         let userCode = userCode.lowercased()
         let userPin = userPin
         MissionaryController.shared.findMissionary(with: userCode, adminPin: userPin) { error in
-            if let error = error {
+            if error != nil {
                 showingAlert = true
             } else {
                 showTabContainer = true

@@ -23,6 +23,8 @@ struct NewUserView: View {
     @State var showAdminPinPanel = false
     @State var showPublicInfoPanel = false
     
+    @State private var showingAlert = false
+    
     var body: some View {
         NavigationView{
             ZStack {
@@ -148,6 +150,9 @@ struct NewUserView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .alert("A user already is using this public code", isPresented: $showingAlert) {
+            Button("OK") { }
+        }
     }
     
     func goBack() {
@@ -159,11 +164,18 @@ struct NewUserView: View {
             return
         }
         
-        showMain = true
-        
-        let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode.lowercased(), adminPin: adminPin, description: description)
-        
-        MissionaryController.shared.save(missionary: missionary)
+        let code = publicCode.lowercased()
+        MissionaryController.shared.findMissionary(with: code) { error in
+            if error == nil {
+                showingAlert = true
+            } else {
+                showMain = true
+                
+                let missionary = Missionary(firstName: firstName, lastName: lastName, openingDateString: openingDate.description, roomCode: publicCode.lowercased(), adminPin: adminPin)
+                
+                MissionaryController.shared.save(missionary: missionary)
+            }
+        }
     }
 }
 

@@ -43,13 +43,14 @@ struct ProfileView: View {
 }
 
 struct ProfileText: View {
-    @AppStorage("name") var name = (MissionaryController.shared.missionary?.firstName ?? "") + " " + (MissionaryController.shared.missionary?.lastName ?? "")
+    @ObservedObject var missionaryController = MissionaryController.shared
+    
     @AppStorage("description") var description = DefaultSettings.description
     
     var body: some View {
         VStack(spacing: 15) {
             VStack(spacing: 5) {
-                Text(name)
+                Text((missionaryController.missionary?.firstName ?? "") + (" ") + (missionaryController.missionary?.lastName ?? ""))
                     .bold()
                     .font(.title)
             }.padding()

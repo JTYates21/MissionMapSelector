@@ -57,11 +57,15 @@ class MissionaryController: ObservableObject {
             if let snapshot = snapshot {
                 if let firstDoc = snapshot.documents.first {
                     
-                    let missionary = try? firstDoc.data(as: Missionary.self)
-                    self.missionary = missionary
-                    callBack(nil)
-                    if let adminPin = adminPin, adminPin == missionary?.adminPin {
-                        self.isAdmin = true
+                    do {
+                        let missionary = try firstDoc.data(as: Missionary.self)
+                        self.missionary = missionary
+                        callBack(nil)
+                        if let adminPin = adminPin, adminPin == missionary.adminPin {
+                            self.isAdmin = true
+                        }
+                    } catch {
+                        print(error)
                     }
                 } else {
                     callBack(.noMissionaryFound)

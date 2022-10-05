@@ -30,7 +30,7 @@ struct HomePageView: View {
                 
                 
                 VStack {
-                    TextField("room code", text: $userCode)
+                    TextField("public code", text: $userCode)
                         .onSubmit {
                             findMissionary()
                         }
@@ -96,7 +96,7 @@ struct HomePageView: View {
     func findMissionary() {
         let code = userCode.lowercased()
         MissionaryController.shared.findMissionary(with: code) { error in
-            if let error = error {
+            if error != nil {
                 showingAlert = true
             } else {
                 showTabContainer = true

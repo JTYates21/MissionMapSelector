@@ -12,6 +12,7 @@ struct TabContainer: View {
         NavigationView {
             TabView {
                 MapViewRepresentable()
+                    .edgesIgnoringSafeArea(.all)
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }
