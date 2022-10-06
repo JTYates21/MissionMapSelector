@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import CoreLocation
 
 enum MissionaryError: Error {
     case noMissionaryFound
@@ -26,7 +27,8 @@ class MissionaryController: ObservableObject {
     
     @Published var missionary: Missionary?
     
-    private let path: String = "Missionary"
+    private let missionaryPath: String = "Missionary"
+    private let guessesPath = "Guesses"
     private let roomCodeKey = "roomCode"
     let adminPinKey = "adminPin"
     
@@ -49,7 +51,7 @@ class MissionaryController: ObservableObject {
         if adminPin == nil {
             adminPin = UserDefaults.standard.string(forKey: adminPinKey)
         }
-        let missionaryRef = db.collection(path)
+        let missionaryRef = db.collection(missionaryPath)
         let query = missionaryRef.whereField(roomCodeKey, isEqualTo: roomCode.lowercased())
         
         query.getDocuments { [weak self] snapshot, error in
@@ -85,7 +87,7 @@ class MissionaryController: ObservableObject {
     
     func save(missionary: Missionary) {
         do {
-            let newM = try store.collection(path).addDocument(from: missionary)
+            let newM = try store.collection(missionaryPath).addDocument(from: missionary)
             print(newM.documentID)
         } catch {
             print(error.localizedDescription)
@@ -93,7 +95,7 @@ class MissionaryController: ObservableObject {
     }
     
     func retrieveMissionary(id: String) {
-        let docRef = db.collection(path).document(id)
+        let docRef = db.collection(missionaryPath).document(id)
         
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -103,5 +105,33 @@ class MissionaryController: ObservableObject {
                 print("Data does not exist")
             }
         }
+    }
+    
+    func saveGuess(at location: CLLocationCoordinate2D) {
+        guard let missionary, let id = missionary.id else {return} //TODO: show user error
+        let geoPoint = GeoPoint(latitude: location.latitude, longitude: location.longitude)
+        let createdAtString = Date.now.description
+        let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        clLocation.fetchCityAndCountry { city, country, error in
+            
+            if country == "United States" {
+                clLocation.placemark { placemark, error in
+                    placemark?.state
+                    print(placemark?.state)
+                }
+            }
+            
+            let newGuess = Guess(coordinates: geoPoint, userId: UserDefaults.standard.currentUserId, createdAtString: createdAtString, countryCode: country, stateCode: city)
+            let path = "\(self.missionaryPath)/\(id)/\(self.guessesPath)"
+            do {
+                let newM = try self.store.collection(path).addDocument(from: newGuess)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func generateGuessFromLocation() {
+        
     }
 }

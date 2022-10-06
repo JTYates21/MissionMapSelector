@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseFirestoreSwift
+import CoreLocation
 
 struct Missionary: Codable {
     @DocumentID var id: String? = UUID().uuidString
@@ -16,4 +18,13 @@ struct Missionary: Codable {
     let roomCode: String
     let adminPin: String
 //    var description: String
+}
+
+struct Guess: Codable {
+    @DocumentID var id: String? = UUID().uuidString
+    let coordinates: GeoPoint
+    let userId: String
+    let createdAtString: String
+    let countryCode: String?
+    let stateCode: String?
 }

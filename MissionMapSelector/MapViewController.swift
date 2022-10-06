@@ -37,6 +37,7 @@ class MapViewController: UIViewController {
         if gestureRecognizer.state != UIGestureRecognizer.State.ended {
             let touchLocation = gestureRecognizer.location(in: mapView)
             let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
+            MissionaryController.shared.saveGuess(at: locationCoordinate)
             
             print("Tapped at latitude: \(locationCoordinate.latitude), longitude: \(locationCoordinate.longitude)")
             
@@ -95,3 +96,29 @@ struct MapViewRepresentable: UIViewControllerRepresentable {
     
 }
 
+extension CLLocation {
+    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
+    }
+    func placemark(completion: @escaping (_ placemark: CLPlacemark?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first, $1) }
+    }
+}
+
+extension CLPlacemark {
+    /// street name, eg. Infinite Loop
+    var streetName: String? { thoroughfare }
+    /// // eg. 1
+    var streetNumber: String? { subThoroughfare }
+    /// city, eg. Cupertino
+    var city: String? { locality }
+    /// neighborhood, common name, eg. Mission District
+    var neighborhood: String? { subLocality }
+    /// state, eg. CA
+    var state: String? { administrativeArea }
+    /// county, eg. Santa Clara
+    var county: String? { subAdministrativeArea }
+    /// zip code, eg. 95014
+    var zipCode: String? { postalCode }
+    /// postal address formatted
+}

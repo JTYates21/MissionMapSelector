@@ -36,6 +36,7 @@
 		4DB18B2028B92CE50037EEB0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4DB18B1F28B92CE50037EEB0 /* FirebaseCrashlytics */; };
 		4DB18B2228B92CE50037EEB0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4DB18B2128B92CE50037EEB0 /* FirebaseFirestore */; };
 		4DB18B2428B92CE50037EEB0 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4DB18B2328B92CE50037EEB0 /* FirebaseFirestoreSwift */; };
+		4DF7626B28EDCBEC00B104D5 /* GeoPoint+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF7626A28EDCBEC00B104D5 /* GeoPoint+Codable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		4DB18B1428B912F80037EEB0 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4DB18B1628B913550037EEB0 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
 		4DB18B1828B9289A0037EEB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4DF7626A28EDCBEC00B104D5 /* GeoPoint+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoPoint+Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				4D25F7F228D223FF00500CC9 /* UserDefaultExtensions.swift */,
 				4D66E47A28C0FE410090B9DD /* MissionaryController.swift */,
 				4D66E47C28C0FEA20090B9DD /* Missionary.swift */,
+				4DF7626A28EDCBEC00B104D5 /* GeoPoint+Codable.swift */,
 				4D25F7F028D21E4900500CC9 /* MainContainerView.swift */,
 				4D14A01128B3CB1400E78B1D /* HomePageView.swift */,
 				4DB18B1428B912F80037EEB0 /* InfoView.swift */,
@@ -239,6 +242,7 @@
 				4D0441A528D38912002F1BB1 /* HeaderBanner.swift in Sources */,
 				4D27E9F428CA480700928C88 /* TabContainer.swift in Sources */,
 				4D5E008928C24CD1000E61B3 /* NewUserView.swift in Sources */,
+				4DF7626B28EDCBEC00B104D5 /* GeoPoint+Codable.swift in Sources */,
 				4D25F7F328D223FF00500CC9 /* UserDefaultExtensions.swift in Sources */,
 				4DB18B1528B912F80037EEB0 /* InfoView.swift in Sources */,
 				4D0441AB28D389C6002F1BB1 /* SettingsView.swift in Sources */,

@@ -10,6 +10,7 @@ import SwiftUI
 struct InfoView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var infoText: String {
                         """
         this app has been produced for the use of

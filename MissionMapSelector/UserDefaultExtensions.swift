@@ -20,4 +20,19 @@ extension UserDefaults {
             }
         }
     }
+    
+    var currentUserId: String {
+        get {
+            if let id = string(forKey: #function) {
+                return id
+            } else {
+                let newId = UUID().uuidString
+                currentUserId = newId
+                return newId
+            }
+        } set {
+            set(newValue, forKey: #function)
+        }
+    }
 }
+
