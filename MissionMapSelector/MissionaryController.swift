@@ -26,6 +26,7 @@ class MissionaryController: ObservableObject {
     }
     
     @Published var missionary: Missionary?
+    @Published var guesses: [Guess] = []
     
     private let missionaryPath: String = "Missionary"
     private let guessesPath = "Guesses"
@@ -107,7 +108,25 @@ class MissionaryController: ObservableObject {
         }
     }
     
-    func saveGuess(at location: CLLocationCoordinate2D) {
+    func retrieveGeoPoints(missionaryId: String, completion: @escaping () -> Void) {
+        let docRef = db.collection(missionaryPath).document(missionaryId).collection(guessesPath)
+        
+        docRef.getDocuments { (guessDocs, error) in
+            if let guessDocs = guessDocs, !guessDocs.isEmpty {
+                var guesses: [Guess] = []
+                for document in guessDocs.documents {
+                    guard let guess = try? document.data(as: Guess.self) else {continue}
+                    guesses.append(guess)
+                }
+                self.guesses = guesses
+            } else {
+                print("Data does not exist")
+            }
+            completion()
+        }
+    }
+    
+    func saveGuess(at location: CLLocationCoordinate2D, completion: @escaping (Guess) -> Void) {
         guard let missionary, let id = missionary.id else {return} //TODO: show user error
         let geoPoint = GeoPoint(latitude: location.latitude, longitude: location.longitude)
         let createdAtString = Date.now.description
@@ -128,6 +147,7 @@ class MissionaryController: ObservableObject {
             } catch {
                 print(error.localizedDescription)
             }
+            completion(newGuess)
         }
     }
     

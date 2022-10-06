@@ -31,22 +31,46 @@ class MapViewController: UIViewController {
         let oLongTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.handleLongTappedGesture(gestureRecognizer:)))
         
         self.mapView.addGestureRecognizer(oLongTapGesture)
+        MissionaryController.shared.retrieveGeoPoints(missionaryId: MissionaryController.shared.missionary!.id!, completion: {
+            for guess in MissionaryController.shared.guesses {
+                let myPin = MKPointAnnotation()
+                let locationCoordinate = CLLocationCoordinate2D(latitude: guess.coordinates.latitude, longitude: guess.coordinates.longitude)
+                myPin.coordinate = locationCoordinate
+                
+                myPin.title = "\(guess.countryCode!)"
+                
+//                if guess.countryCode == "United States" {
+//                    locationCoordinate.placemark { placemark, error in
+//
+//                        myPin.title = "\(placemark?.state)"
+//                        print(placemark?.state)
+//                    }
+//                }
+                
+                
+                self.mapView.addAnnotation(myPin)
+            }
+        })
+        
     }
     
     @objc func handleLongTappedGesture(gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state != UIGestureRecognizer.State.ended {
             let touchLocation = gestureRecognizer.location(in: mapView)
             let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
-            MissionaryController.shared.saveGuess(at: locationCoordinate)
+            MissionaryController.shared.saveGuess(at: locationCoordinate, completion: { guess in
+                
+            
             
             print("Tapped at latitude: \(locationCoordinate.latitude), longitude: \(locationCoordinate.longitude)")
             
             let myPin = MKPointAnnotation()
             myPin.coordinate = locationCoordinate
             
-            myPin.title = "latitude: \(locationCoordinate.latitude), longitude: \(locationCoordinate.longitude)"
+            myPin.title = "\(guess.countryCode!)"
             
-            mapView.addAnnotation(myPin)
+                self.mapView.addAnnotation(myPin)
+            })
         }
         
         if gestureRecognizer.state != UIGestureRecognizer.State.began {
