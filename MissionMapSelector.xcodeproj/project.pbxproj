@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		409CDAE12A901BBD006F4C4C /* StateNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409CDAE02A901BBD006F4C4C /* StateNames.swift */; };
 		4D0441A528D38912002F1BB1 /* HeaderBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0441A428D38912002F1BB1 /* HeaderBanner.swift */; };
 		4D0441A728D389A6002F1BB1 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0441A628D389A6002F1BB1 /* UserSettings.swift */; };
 		4D0441A928D389C1002F1BB1 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0441A828D389C1002F1BB1 /* ColorSlider.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		409CDAE02A901BBD006F4C4C /* StateNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateNames.swift; sourceTree = "<group>"; };
 		4D0441A428D38912002F1BB1 /* HeaderBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBanner.swift; sourceTree = "<group>"; };
 		4D0441A628D389A6002F1BB1 /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		4D0441A828D389C1002F1BB1 /* ColorSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSlider.swift; sourceTree = "<group>"; };
@@ -85,6 +87,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		409CDADF2A901BA6006F4C4C /* MapInformation */ = {
+			isa = PBXGroup;
+			children = (
+				4D5B945028E7454100CB824B /* MapViewController.swift */,
+				4D27E9F128CA47D500928C88 /* MapView.swift */,
+				409CDAE02A901BBD006F4C4C /* StateNames.swift */,
+			);
+			path = MapInformation;
+			sourceTree = "<group>";
+		};
 		4D14A00328B3CB1400E78B1D = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +116,7 @@
 		4D14A00E28B3CB1400E78B1D /* MissionMapSelector */ = {
 			isa = PBXGroup;
 			children = (
+				409CDADF2A901BA6006F4C4C /* MapInformation */,
 				4DB18B1328B9113E0037EEB0 /* Info.plist */,
 				4DB18B1828B9289A0037EEB0 /* GoogleService-Info.plist */,
 				4D14A00F28B3CB1400E78B1D /* MissionMapSelectorApp.swift */,
@@ -117,8 +130,6 @@
 				4DB18B1628B913550037EEB0 /* AdminView.swift */,
 				4D5E008828C24CD1000E61B3 /* NewUserView.swift */,
 				4D27E9F328CA480700928C88 /* TabContainer.swift */,
-				4D27E9F128CA47D500928C88 /* MapView.swift */,
-				4D5B945028E7454100CB824B /* MapViewController.swift */,
 				4D27E9EF28CA3A2A00928C88 /* ProfileView.swift */,
 				4D0441A428D38912002F1BB1 /* HeaderBanner.swift */,
 				4D0441A828D389C1002F1BB1 /* ColorSlider.swift */,
@@ -243,6 +254,7 @@
 				4D27E9F428CA480700928C88 /* TabContainer.swift in Sources */,
 				4D5E008928C24CD1000E61B3 /* NewUserView.swift in Sources */,
 				4DF7626B28EDCBEC00B104D5 /* GeoPoint+Codable.swift in Sources */,
+				409CDAE12A901BBD006F4C4C /* StateNames.swift in Sources */,
 				4D25F7F328D223FF00500CC9 /* UserDefaultExtensions.swift in Sources */,
 				4DB18B1528B912F80037EEB0 /* InfoView.swift in Sources */,
 				4D0441AB28D389C6002F1BB1 /* SettingsView.swift in Sources */,
