@@ -9,8 +9,12 @@ import MapKit
 import SwiftUI
 import UIKit
 
+/// A class where functions for the lifecycle and logic of the `MapView`
+/// are located.
 class MapViewController: UIViewController {
     
+    /// Allows us to override the light/dark mode of the user's device.
+    /// We set it to `.dark` to maintain continuity between views.
     let mapView : MKMapView = {
         let map = MKMapView()
         map.overrideUserInterfaceStyle = .dark
@@ -20,6 +24,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Default pin that is given to every `Missionary` object.
         let saltLake = MKPointAnnotation()
         saltLake.title = "Salt Lake Temple"
         saltLake.coordinate = CLLocationCoordinate2D(latitude: 40.770410, longitude: -111.891747)
@@ -78,6 +83,8 @@ class MapViewController: UIViewController {
         }
     }
     
+    /// Function to correctly setup the constraints of the `MapView` to the
+    /// current user's device.
     func setMapConstraints() {
         view.addSubview(mapView)
         
@@ -106,6 +113,8 @@ class MapViewController: UIViewController {
     
 }
 
+/// A `UIViewControllerRepresentable` version of the `MapViewController`
+/// that we can use to connect, navigate, and communicate between SwiftUI and UIKit views.
 struct MapViewRepresentable: UIViewControllerRepresentable {
     typealias UIViewControllerType = MapViewController
     
@@ -114,35 +123,13 @@ struct MapViewRepresentable: UIViewControllerRepresentable {
         return vc
     }
     
-    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        
-    }
-    
+    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {}
 }
 
 extension CLLocation {
-    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
+    /// Function used to retrieve state and country information using the
+    /// given `CLLocation` information.
+    func fetchStateAndCountry(completion: @escaping (_ state: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.administrativeArea, $0?.first?.country, $1) }
     }
-    func placemark(completion: @escaping (_ placemark: CLPlacemark?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first, $1) }
-    }
-}
-
-extension CLPlacemark {
-    /// street name, eg. Infinite Loop
-    var streetName: String? { thoroughfare }
-    /// // eg. 1
-    var streetNumber: String? { subThoroughfare }
-    /// city, eg. Cupertino
-    var city: String? { locality }
-    /// neighborhood, common name, eg. Mission District
-    var neighborhood: String? { subLocality }
-    /// state, eg. CA
-    var state: String? { administrativeArea }
-    /// county, eg. Santa Clara
-    var county: String? { subAdministrativeArea }
-    /// zip code, eg. 95014
-    var zipCode: String? { postalCode }
-    /// postal address formatted
 }

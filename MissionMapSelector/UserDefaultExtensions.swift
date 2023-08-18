@@ -27,7 +27,6 @@ extension UserDefaults {
                 return id
             } else {
                 let newId = UUID().uuidString
-                currentUserId = newId
                 return newId
             }
         } set {

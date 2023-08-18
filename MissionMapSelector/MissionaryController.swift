@@ -15,7 +15,10 @@ enum MissionaryError: Error {
     case unknown
 }
 
+/// A class containing helper functions that relate to a `Missionary` object.
 class MissionaryController: ObservableObject {
+    
+    /// The shared instance of a `MissionaryController`.
     static let shared = MissionaryController()
     
     @Published var adminMissionary: Missionary? {

@@ -14,7 +14,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       FirebaseApp.configure()
       
-      let db = Firestore.firestore()
+      _ = Firestore.firestore()
 
     return true
   }

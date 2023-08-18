@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// This view represents the screen that is seen by the user when
+/// they want to create a new `Missionary`.
 struct NewUserView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

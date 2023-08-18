@@ -34,7 +34,7 @@ struct SettingsView: View {
         }
     }
     func save() {
-        guard var missionary = MissionaryController.shared.missionary else {return}
+        guard let missionary = MissionaryController.shared.missionary else {return}
         
 //        missionary.description = description
         MissionaryController.shared.save(missionary: missionary)
