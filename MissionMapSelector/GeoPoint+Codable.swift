@@ -5,8 +5,8 @@
 //  Created by Jacek Yates on 10/5/22.
 //
 
-import Foundation
 import Firebase
+import Foundation
 
 private protocol CodableGeoPoint: Codable {
   var latitude: Double { get }

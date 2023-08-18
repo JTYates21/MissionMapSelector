@@ -5,10 +5,11 @@
 //  Created by Jacek Yates on 9/1/22.
 //
 
-import Foundation
+import CoreLocation
 import Firebase
 import FirebaseFirestoreSwift
-import CoreLocation
+import Foundation
+
 
 struct Missionary: Codable {
     @DocumentID var id: String? = UUID().uuidString

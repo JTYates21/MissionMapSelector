@@ -5,10 +5,9 @@
 //  Created by Jacek Yates on 9/1/22.
 //
 
-import Foundation
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import CoreLocation
+import FirebaseFirestore
+import Foundation
 
 enum MissionaryError: Error {
     case noMissionaryFound
