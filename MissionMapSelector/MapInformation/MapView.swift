@@ -5,8 +5,8 @@
 //  Created by Jacek Yates on 9/8/22.
 //
 
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct Location: Identifiable {
     let id = UUID()

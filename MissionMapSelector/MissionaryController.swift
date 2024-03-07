@@ -5,10 +5,9 @@
 //  Created by Jacek Yates on 9/1/22.
 //
 
-import Foundation
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import CoreLocation
+import FirebaseFirestore
+import Foundation
 
 enum MissionaryError: Error {
     case noMissionaryFound
@@ -16,7 +15,10 @@ enum MissionaryError: Error {
     case unknown
 }
 
+/// A class containing helper functions that relate to a `Missionary` object.
 class MissionaryController: ObservableObject {
+    
+    /// The shared instance of a `MissionaryController`.
     static let shared = MissionaryController()
     
     @Published var adminMissionary: Missionary? {
@@ -24,36 +26,40 @@ class MissionaryController: ObservableObject {
             UserDefaults.standard.missionaryId = missionary?.id
         }
     }
-    
     @Published var missionary: Missionary?
     @Published var guesses: [Guess] = []
     
+    private let firestoreDataBase = Firestore.firestore()
     private let missionaryPath: String = "Missionary"
     private let guessesPath = "Guesses"
-    private let roomCodeKey = "roomCode"
-    let adminPinKey = "adminPin"
-    
+    private let publicCodeKey = "publicCode"
     private var isAdmin = false
     
-    private let store = Firestore.firestore()
-    
-    
-    let db = Firestore.firestore()
-    
+    public let adminPinKey = "adminPin"
+
     init() {
         if let missionaryId = UserDefaults.standard.missionaryId {
             retrieveMissionary(id: missionaryId)
         }
     }
 
-    
-    func findMissionary(with roomCode: String, adminPin: String? = nil, callBack: @escaping (MissionaryError?) -> ()) {
+    /// Function that allows us to call into the Firestore Database and search for a
+    /// `Missionary` object.
+    /// - Parameters:
+    ///   - publicCode: The unique public code created by the missionary that
+    ///   others can use to find their profile.
+    ///   - adminPin: The unique 4-digit number pin that the missionary created.
+    ///   This allows them to log into their account as an "admin".
+    ///   - callBack: A completion block to handle if there are any errors.
+    func findMissionary(with publicCode: String,
+                        adminPin: String? = nil,
+                        callBack: @escaping (MissionaryError?) -> ()) {
         var adminPin = adminPin
         if adminPin == nil {
             adminPin = UserDefaults.standard.string(forKey: adminPinKey)
         }
-        let missionaryRef = db.collection(missionaryPath)
-        let query = missionaryRef.whereField(roomCodeKey, isEqualTo: roomCode.lowercased())
+        let missionaryRef = firestoreDataBase.collection(missionaryPath)
+        let query = missionaryRef.whereField(publicCodeKey, isEqualTo: publicCode.lowercased())
         
         query.getDocuments { [weak self] snapshot, error in
             guard let self = self else {return}
@@ -74,10 +80,10 @@ class MissionaryController: ObservableObject {
                     callBack(.noMissionaryFound)
                 }
                 for document in snapshot.documents {
-                    let missionary = try? document.data(as: Missionary.self)
+                    _ = try? document.data(as: Missionary.self)
                     print("\(document.documentID) => \(document.data())")
                 }
-            } else if let err = error {
+            } else if error != nil {
                 callBack(.noDocuments)
             } else {
                 callBack(.unknown)
@@ -85,31 +91,44 @@ class MissionaryController: ObservableObject {
         }
     }
     
-    
+    /// Function that saves a given missionary to the Firestore Database.
+    /// - Parameter missionary: The missionary that the user
+    /// wants to save.
     func save(missionary: Missionary) {
         do {
-            let newM = try store.collection(missionaryPath).addDocument(from: missionary)
+            let newM = try firestoreDataBase.collection(missionaryPath).addDocument(from: missionary)
             print(newM.documentID)
         } catch {
             print(error.localizedDescription)
         }
     }
     
+    /// Function that calls into the Firestore Database and searches for any
+    /// `Missionary` objects. This checks to see if the missionaryId of
+    /// that given `Missionary` matches the `id` passed in.
+    /// - Parameter id: The unique id linked to the missionary that
+    /// we want to check for.
     func retrieveMissionary(id: String) {
-        let docRef = db.collection(missionaryPath).document(id)
+        let docRef = firestoreDataBase.collection(missionaryPath).document(id)
         
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let missionary = try? document.data(as: Missionary.self)
                 self.missionary = missionary
             } else {
-                print("Data does not exist")
+                print("Unable to retrieve Missionary from given Missionary ID.")
             }
         }
     }
     
+    /// Function that calls into the Firestore Database and searches for the
+    /// array of guesses (if any) that are linked to the `Missionary` object.
+    /// - Parameters:
+    ///   - missionaryId: The unique id linked to the missionary that
+    ///   we want to check for.
+    ///   - completion: The closure to call when the operation is completed.
     func retrieveGeoPoints(missionaryId: String, completion: @escaping () -> Void) {
-        let docRef = db.collection(missionaryPath).document(missionaryId).collection(guessesPath)
+        let docRef = firestoreDataBase.collection(missionaryPath).document(missionaryId).collection(guessesPath)
         
         docRef.getDocuments { (guessDocs, error) in
             if let guessDocs = guessDocs, !guessDocs.isEmpty {
@@ -120,38 +139,45 @@ class MissionaryController: ObservableObject {
                 }
                 self.guesses = guesses
             } else {
-                print("Data does not exist")
+                print("Unable to retrieve GeoPoints from given Missionary ID.")
             }
             completion()
         }
     }
     
+    /// Function that saves a `Guess` to the `Missionary` object that the
+    /// user is currently looking at. This guess is saved to array of guesses
+    /// linked to the Firestore Database for the given missionary.
+    /// - Parameters:
+    ///   - location: The `CLLocationCoordinate` of the guess that
+    ///   we are wanting to save.
+    ///   - completion: The closure to call when the operation is completed.
     func saveGuess(at location: CLLocationCoordinate2D, completion: @escaping (Guess) -> Void) {
-        guard let missionary, let id = missionary.id else {return} //TODO: show user error
+        guard let missionary, let id = missionary.id else {return}
         let geoPoint = GeoPoint(latitude: location.latitude, longitude: location.longitude)
         let createdAtString = Date.now.description
         let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-        clLocation.fetchCityAndCountry { city, country, error in
+        clLocation.fetchStateAndCountry { state, country, error in
             
-            if country == "United States" {
-                clLocation.placemark { placemark, error in
-                    placemark?.state
-                    print(placemark?.state)
+            var currentStateName: String = ""
+            for (key, value) in stateNames {
+                if key == state {
+                    currentStateName = value
                 }
             }
             
-            let newGuess = Guess(coordinates: geoPoint, userId: UserDefaults.standard.currentUserId, createdAtString: createdAtString, countryCode: country, stateCode: city)
+            let newGuess = Guess(coordinates: geoPoint,
+                                 userId: UserDefaults.standard.currentUserId,
+                                 createdAtString: createdAtString,
+                                 countryCode: country,
+                                 stateCode: currentStateName)
             let path = "\(self.missionaryPath)/\(id)/\(self.guessesPath)"
             do {
-                let newM = try self.store.collection(path).addDocument(from: newGuess)
+                let _ = try self.firestoreDataBase.collection(path).addDocument(from: newGuess)
             } catch {
                 print(error.localizedDescription)
             }
             completion(newGuess)
         }
-    }
-    
-    func generateGuessFromLocation() {
-        
     }
 }

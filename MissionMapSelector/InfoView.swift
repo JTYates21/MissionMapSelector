@@ -53,7 +53,7 @@ struct InfoView: View {
                     .padding(.horizontal, 30)
                     .multilineTextAlignment(.center)
                 Spacer()
-                Text("2022")
+                Text("2023")
                     .font(.custom("CinzelDecorative-Regular", size: 14))
                     .foregroundColor(.black)
                     .padding(.horizontal, 15)

@@ -5,12 +5,16 @@
 //  Created by Jacek Yates on 9/30/22.
 //
 
-import UIKit
-import SwiftUI
 import MapKit
+import SwiftUI
+import UIKit
 
+/// A class where functions for the lifecycle and logic of the `MapView`
+/// are located.
 class MapViewController: UIViewController {
     
+    /// Allows us to override the light/dark mode of the user's device.
+    /// We set it to `.dark` to maintain continuity between views.
     let mapView : MKMapView = {
         let map = MKMapView()
         map.overrideUserInterfaceStyle = .dark
@@ -20,6 +24,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Default pin that is given to every `Missionary` object.
         let saltLake = MKPointAnnotation()
         saltLake.title = "Salt Lake Temple"
         saltLake.coordinate = CLLocationCoordinate2D(latitude: 40.770410, longitude: -111.891747)
@@ -28,56 +33,74 @@ class MapViewController: UIViewController {
         self.view.addSubview(mapView)
         setMapConstraints()
         
-        let oLongTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.handleLongTappedGesture(gestureRecognizer:)))
+        let longTapGesture = UILongPressGestureRecognizer(target: self,
+                                                          action: #selector(MapViewController.handleLongTappedGesture(_ :)))
+        self.mapView.addGestureRecognizer(longTapGesture)
         
-        self.mapView.addGestureRecognizer(oLongTapGesture)
-        MissionaryController.shared.retrieveGeoPoints(missionaryId: MissionaryController.shared.missionary!.id!, completion: {
+        setupCurrentGuesses()
+    }
+    
+    /// Function that converts the touch point to `CLLocationCoordinate2D`, and
+    /// then calls the `addPin()` function to add a pin to the map
+    /// - Parameter gestureRecognizer: The gesture that we want to recognize
+    /// and convert into coordinates to be saved.
+    @objc func handleLongTappedGesture(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let locationCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            
+            addPin(at: locationCoordinates)
+        }
+    }
+    
+    /// Function that adds a visible pin to the `MapView` using the coordinates
+    /// given by the `handleLongTappedGesture()` function.
+    /// - Parameter coordinates: The coordinates we are adding the pin to.
+    func addPin(at coordinates: CLLocationCoordinate2D) {
+        MissionaryController.shared.saveGuess(at: coordinates) { guess in
+            let newPin = MKPointAnnotation()
+            newPin.coordinate = coordinates
+            newPin.title = guess.countryCode
+            
+            if guess.countryCode == "United States",
+               let stateCode = guess.stateCode {
+                newPin.title = "\(stateCode)"
+            }
+            
+            self.mapView.addAnnotation(newPin)
+        }
+    }
+    
+    /// This function access the Firestore Database and pulls in the array of
+    /// guesses linked to the missionary currently being viewed.
+    func setupCurrentGuesses() {
+        guard let missionaryId = MissionaryController.shared.missionary?.id else {
+            print("!!! There is no missionaryId !!!")
+            return
+        }
+        
+        MissionaryController.shared.retrieveGeoPoints(missionaryId: missionaryId,
+                                                      completion: {
             for guess in MissionaryController.shared.guesses {
                 let myPin = MKPointAnnotation()
-                let locationCoordinate = CLLocationCoordinate2D(latitude: guess.coordinates.latitude, longitude: guess.coordinates.longitude)
+                let locationCoordinate = CLLocationCoordinate2D(latitude: guess.coordinates.latitude,
+                                                                longitude: guess.coordinates.longitude)
                 myPin.coordinate = locationCoordinate
                 
                 myPin.title = "\(guess.countryCode!)"
                 
-//                if guess.countryCode == "United States" {
-//                    locationCoordinate.placemark { placemark, error in
-//
-//                        myPin.title = "\(placemark?.state)"
-//                        print(placemark?.state)
-//                    }
-//                }
-                
+                if guess.countryCode == "United States",
+                   let stateCode = guess.stateCode {
+                    myPin.title = "\(stateCode)"
+                }
                 
                 self.mapView.addAnnotation(myPin)
             }
         })
-        
     }
     
-    @objc func handleLongTappedGesture(gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
-            let touchLocation = gestureRecognizer.location(in: mapView)
-            let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
-            MissionaryController.shared.saveGuess(at: locationCoordinate, completion: { guess in
-                
-            
-            
-            print("Tapped at latitude: \(locationCoordinate.latitude), longitude: \(locationCoordinate.longitude)")
-            
-            let myPin = MKPointAnnotation()
-            myPin.coordinate = locationCoordinate
-            
-            myPin.title = "\(guess.countryCode!)"
-            
-                self.mapView.addAnnotation(myPin)
-            })
-        }
-        
-        if gestureRecognizer.state != UIGestureRecognizer.State.began {
-            return
-        }
-    }
-    
+    /// Function to correctly setup the constraints of the `MapView` to the
+    /// current user's device.
     func setMapConstraints() {
         view.addSubview(mapView)
         
@@ -87,25 +110,10 @@ class MapViewController: UIViewController {
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
     }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-        
-        return annotationView
-    }
-    
 }
 
+/// A `UIViewControllerRepresentable` version of the `MapViewController`
+/// that we can use to connect, navigate, and communicate between SwiftUI and UIKit views.
 struct MapViewRepresentable: UIViewControllerRepresentable {
     typealias UIViewControllerType = MapViewController
     
@@ -114,35 +122,13 @@ struct MapViewRepresentable: UIViewControllerRepresentable {
         return vc
     }
     
-    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        
-    }
-    
+    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {}
 }
 
 extension CLLocation {
-    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
+    /// Function used to retrieve state and country information using the
+    /// given `CLLocation` information.
+    func fetchStateAndCountry(completion: @escaping (_ state: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.administrativeArea, $0?.first?.country, $1) }
     }
-    func placemark(completion: @escaping (_ placemark: CLPlacemark?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first, $1) }
-    }
-}
-
-extension CLPlacemark {
-    /// street name, eg. Infinite Loop
-    var streetName: String? { thoroughfare }
-    /// // eg. 1
-    var streetNumber: String? { subThoroughfare }
-    /// city, eg. Cupertino
-    var city: String? { locality }
-    /// neighborhood, common name, eg. Mission District
-    var neighborhood: String? { subLocality }
-    /// state, eg. CA
-    var state: String? { administrativeArea }
-    /// county, eg. Santa Clara
-    var county: String? { subAdministrativeArea }
-    /// zip code, eg. 95014
-    var zipCode: String? { postalCode }
-    /// postal address formatted
 }
