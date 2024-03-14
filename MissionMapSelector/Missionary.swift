@@ -10,7 +10,6 @@ import Firebase
 import FirebaseFirestoreSwift
 import Foundation
 
-
 /// A `Missionary` object reflecting the actual missionary that is
 /// being viewed by the original creator or the general public.
 struct Missionary: Codable {

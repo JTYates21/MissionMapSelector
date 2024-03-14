@@ -11,12 +11,12 @@ import SwiftUI
 
 
 enum DefaultSettings {
-    // Color Slider Values
+    /// Color Slider Values
     static var rValue: Double = 150.0
     static var gValue: Double = 150.0
     static var bValue: Double = 150.0
     
-    // Profile
+    /// Profile
     static var name: String = "Elder/Sister Smith"
     static var description: String = "Welcome to my profile! I hope you enjoy trying to guess where I am going as much as I do!"
 }

@@ -11,22 +11,21 @@ struct ProfileView: View {
     @State var isPresented = false
     
     var body: some View {
-        
         VStack {
             VStack {
                 Header()
                 ProfileText()
             }
             Spacer()
-//            Button (
-//                action: { self.isPresented = true },
-//                label: {
-//                    Label("Edit", systemImage: "pencil")
-//                })
-//            .padding(.bottom, 80)
-//            .sheet(isPresented: $isPresented, content: {
-//                SettingsView()
-//            })
+            //            Button (
+            //                action: { self.isPresented = true },
+            //                label: {
+            //                    Label("Edit", systemImage: "pencil")
+            //                })
+            //            .padding(.bottom, 80)
+            //            .sheet(isPresented: $isPresented, content: {
+            //                SettingsView()
+            //            })
         }
         .background(.ultraThinMaterial)
         .background {
@@ -42,9 +41,9 @@ struct ProfileView: View {
     }
 }
 
+
 struct ProfileText: View {
     @ObservedObject var missionaryController = MissionaryController.shared
-    
     @AppStorage("description") var description = DefaultSettings.description
     
     var body: some View {
@@ -54,6 +53,7 @@ struct ProfileText: View {
                     .bold()
                     .font(.title)
             }.padding()
+            
             Text(description)
                 .multilineTextAlignment(.center)
                 .padding()
@@ -61,6 +61,7 @@ struct ProfileText: View {
         }
     }
 }
+
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {

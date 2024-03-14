@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct AdminView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @State var userCode = ""
     @State var userPin = ""
-    
     @State var showTabContainer = false
     @State private var showingAlert = false
     
     var body: some View {
         VStack {
-            
             Spacer()
             
             VStack {
@@ -120,6 +116,7 @@ struct AdminView: View {
         }
     }
 }
+
 
 struct AdminView_Previews: PreviewProvider {
     static var previews: some View {

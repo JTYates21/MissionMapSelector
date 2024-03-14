@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainContainerView: View {
-    
     @ObservedObject var missionaryController = MissionaryController.shared
     
     var body: some View {

@@ -6,8 +6,8 @@
 //
 
 import CoreLocation
-import FirebaseFirestore
 import Foundation
+import FirebaseFirestore
 
 enum MissionaryError: Error {
     case noMissionaryFound
