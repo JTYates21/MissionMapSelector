@@ -8,26 +8,23 @@
 import SwiftUI
 
 struct HomePageView: View {
-    
     @State private var userCode: String = ""
     @State private var showTabContainer = false
-    
     @State private var showingAlert = false
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack { 
                 Spacer()
-                
+
                 Text("mission map selector")
                     .font(.custom("CinzelDecorative-Regular", size: 40))
                     .multilineTextAlignment(.center)
                     .padding(5)
                     .background(.ultraThinMaterial)
                     .cornerRadius(8)
-                
+
                 Spacer()
-                
                 
                 VStack {
                     TextField("public code", text: $userCode)
@@ -40,7 +37,6 @@ struct HomePageView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(.black, lineWidth: 2))
-                
                     Text("enter code")
                         .font(.custom("CinzelDecorative-Regular", size: 17))
                 }
@@ -49,11 +45,9 @@ struct HomePageView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 100)
                 
-                
                 Spacer()
                 
                 HStack {
-                    
                     NavigationLink("info", destination: InfoView())
                         .font(.custom("CinzelDecorative-Regular", size: 14))
                         .foregroundColor(.black)
@@ -93,6 +87,7 @@ struct HomePageView: View {
             Button("OK") { }
         }
     }
+    
     func findMissionary() {
         let code = userCode.lowercased()
         MissionaryController.shared.findMissionary(with: code) { error in
@@ -103,10 +98,6 @@ struct HomePageView: View {
             }
         }
     }
-    
-    //    extension UITextContentType {
-    //
-    //    }
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -16,6 +16,7 @@ struct TabContainer: View {
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }
+                
                 ProfileView()
                     .tabItem {
                         Label("Missionary", systemImage: "person.text.rectangle")
@@ -25,7 +26,7 @@ struct TabContainer: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(action: { MissionaryController.shared.missionary = nil}) {
+                    Button(action: { MissionaryController.shared.missionary = nil }) {
                         Text("return")
                             .font(.custom("CinzelDecorative-Regular", size: 14))
                             .foregroundColor(.black)
@@ -48,6 +49,7 @@ struct TabContainer: View {
         }
     }
 }
+
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {

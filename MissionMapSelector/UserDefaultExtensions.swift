@@ -8,7 +8,6 @@
 import Foundation
 
 extension UserDefaults {
-    
     var missionaryId: String? {
         get {
             value(forKey: #function) as? String
@@ -34,4 +33,3 @@ extension UserDefaults {
         }
     }
 }
-

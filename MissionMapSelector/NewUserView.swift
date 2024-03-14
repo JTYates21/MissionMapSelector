@@ -10,9 +10,7 @@ import SwiftUI
 /// This view represents the screen that is seen by the user when
 /// they want to create a new `Missionary`.
 struct NewUserView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @State var firstName: String = ""
     @State var lastName: String = ""
     @State var openingDate: Date = Date()
@@ -20,7 +18,6 @@ struct NewUserView: View {
     @State var adminPin: String = ""
     @State var publicCode: String = ""
     @State var showMain: Bool = false
-    
     @State private var showingEmptyFieldsAlert: Bool = false
     @State private var showingPublicCodeAlert: Bool = false
     
@@ -80,7 +77,6 @@ struct NewUserView: View {
                 showingPublicCodeAlert = true
             } else {
                 showMain = true
-                
                 let missionary = Missionary(firstName: firstName,
                                             lastName: lastName,
                                             openingDateString: openingDate.formatted(date: .abbreviated,
@@ -93,6 +89,7 @@ struct NewUserView: View {
         }
     }
 }
+
 
 extension NewUserView {
     /// The view that the user will see.
@@ -114,12 +111,11 @@ extension NewUserView {
                     .padding(.vertical, 5)
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
-                    .padding(.horizontal, 15)
             }
             Spacer()
             Spacer()
         }
-        .padding(60)
+        .padding(30)
         .toolbar(content: {
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: goBack) {
@@ -163,6 +159,7 @@ extension NewUserView {
         }
         .padding(5)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+        .frame(height: 350)
     }
     
     /// The row where the user will input the first name of the
@@ -212,6 +209,7 @@ extension NewUserView {
                     .opacity(0.5)
                     .disabled(true)
             }
+            
             HStack {
                 Toggle(isOn: $dateToggle) {
                     Text("I don't have a date yet")
@@ -228,8 +226,9 @@ extension NewUserView {
     
     /// The row where the user inputs a chosen 4-digit pin.
     func adminPinRow() -> some View {
-        HStack{
+        HStack {
             Text("admin pin:")
+            
             TextField("4 digit pin", text: $adminPin)
                 .onChange(of: adminPin) { newValue in
                     if newValue.count > 4 {
@@ -248,7 +247,7 @@ extension NewUserView {
     /// This code is what the missionary can share with the public,
     /// and what the public uses to get to that missionary's page.
     func publicCodeRow() -> some View {
-        HStack{
+        HStack {
             Text("public code:")
             TextField("6-8 letter word", text: $publicCode)
         }
@@ -259,6 +258,7 @@ extension NewUserView {
                 .stroke(.black, lineWidth: 2))
     }
 }
+
 
 struct NewUserView_Previews: PreviewProvider {
     static var previews: some View {

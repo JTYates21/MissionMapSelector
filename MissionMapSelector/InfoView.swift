@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InfoView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var infoText: String {
@@ -31,12 +30,13 @@ struct InfoView: View {
     var body: some View {
         VStack {
             Spacer()
+            
             Text(infoText)
                 .font(.custom("CinzelDecorative-Regular", size: 18))
                 .foregroundColor(.black)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 2)
-                
+            
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 30)
             
@@ -53,7 +53,7 @@ struct InfoView: View {
                     .padding(.horizontal, 30)
                     .multilineTextAlignment(.center)
                 Spacer()
-                Text("2023")
+                Text("2024")
                     .font(.custom("CinzelDecorative-Regular", size: 14))
                     .foregroundColor(.black)
                     .padding(.horizontal, 15)
@@ -95,6 +95,8 @@ struct InfoView: View {
         presentationMode.wrappedValue.dismiss()
     }
 }
+
+
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
         InfoView()

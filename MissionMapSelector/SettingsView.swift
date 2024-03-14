@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("description") var description = DefaultSettings.description
-
+    
     var body: some View {
         NavigationView {
             Form {
@@ -33,13 +33,16 @@ struct SettingsView: View {
             )
         }
     }
+    
     func save() {
-        guard let missionary = MissionaryController.shared.missionary else {return}
+        guard let missionary = MissionaryController.shared.missionary else { return }
         
-//        missionary.description = description
+        //        missionary.description = description
         MissionaryController.shared.save(missionary: missionary)
     }
 }
+
+
 struct ProfileSettings: View {
     @AppStorage("name") var name = (MissionaryController.shared.missionary?.firstName ?? "") + " " + (MissionaryController.shared.missionary?.lastName ?? "")
     @Binding var description: String
@@ -66,7 +69,7 @@ struct HeaderBackgroundSliders: View {
                         .frame(width: 100)
                         .foregroundColor(Color(red: rValue, green: gValue, blue: bValue, opacity: 1.0))
                 }
-
+                
                 VStack {
                     ColorSlider(value: $rValue, textColor: .red)
                     ColorSlider(value: $gValue, textColor: .green)
