@@ -111,12 +111,11 @@ extension NewUserView {
                     .padding(.vertical, 5)
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
-                    .padding(.horizontal, 15)
             }
             Spacer()
             Spacer()
         }
-        .padding(60)
+        .padding(30)
         .toolbar(content: {
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: goBack) {
@@ -160,6 +159,7 @@ extension NewUserView {
         }
         .padding(5)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+        .frame(height: 350)
     }
     
     /// The row where the user will input the first name of the
